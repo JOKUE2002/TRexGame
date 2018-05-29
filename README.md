@@ -11,5 +11,5 @@ Enjoy!
 
 
 CurrentHighscores:
-@JOKUE2002 - 2215
+@JOKUE2002 - 4415
 @Stichel - 2766
