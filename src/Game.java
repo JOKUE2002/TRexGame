@@ -14,27 +14,24 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Game extends JFrame implements MouseListener, KeyListener, ActionListener {
+public class Game extends JFrame implements KeyListener, ActionListener {
 
 	/**
-	 * This is my attempt at programming the google TRex Game. 
-	 * Total Coding-Time is at around 1h 45m.
-	 * Sprites are from https://www.spriters-resource.com/pc_computer/trexgame/
-	 * You can download the full code as well as the Runnable JAR File from my GitHub account
-	 * @JOKUE2002. You can also find me on:
-	 *  twitter (@JOKUE2002) 
-	 *  and on Instagram (@JOKUE2002)
-	 * Have fun playing. 
-	 * My highscore is 1027.
-	 * Feel free to beat it. if you do so, 
-	 * please share your score on Github or on Twitter with a screenshot. and reffer to my account.
-	 * Thanks!
-	 * More functions will follow (onscreen menu, etc)
+	 * This is my attempt at programming the google TRex Game. Total Coding-Time
+	 * is at around 1h 45m. Sprites are from
+	 * https://www.spriters-resource.com/pc_computer/trexgame/ You can download
+	 * the full code as well as the Runnable JAR File from my GitHub
+	 * account @JOKUE2002. You can also find me on: twitter (@JOKUE2002) and on
+	 * Instagram (@JOKUE2002) Have fun playing. My highscore is 1027. Feel free
+	 * to beat it. if you do so, please share your score on Github or on Twitter
+	 * with a screenshot. and reffer to my account. Thanks! More functions will
+	 * follow (onscreen menu, etc)
 	 */
-	
+
 	/**
 	 * 
 	 */
@@ -106,6 +103,11 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 	 */
 
 	int groundZug = 0;
+
+	/**
+	 * Speichert den highscore
+	 */
+	int highScore = 0;
 
 	/**
 	 * ArrayList mit Hindenissen
@@ -214,9 +216,10 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 
 		// SCORE
 		dbg.setColor(Color.red);
-		dbg.setFont(new Font("Comic Sans MS",Font.PLAIN, 12));
+		dbg.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		dbg.drawString("HI: " + Integer.toString(highScore), width - 120, 20);
 		dbg.drawString(Integer.toString(score), width - 40, 20);
-		
+
 		g.drawImage(img, 0, 20, null);
 	}
 
@@ -232,14 +235,6 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 			return hindernis4;
 		}
 		return hindernis1;
-	}
-
-	/**
-	 * MouseClicked to catch the Mouseaction in the menus
-	 */
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
 	}
 
 	/**
@@ -298,6 +293,11 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 
 	private void endGame() {
 		timer.stop();
+		// JOptionPane.showMessageDialog(null, "Your final Score: "+score);
+		if (highScore < score) {
+			JOptionPane.showMessageDialog(null, "New HighScore! \n" + score);
+			highScore = score;
+		}
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -307,7 +307,7 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 		hindernisse.clear();
 		y = 0;
 		vy = 0;
-		timer.restart();
+		// timer.restart();
 		score = 0;
 	}
 
@@ -328,27 +328,15 @@ public class Game extends JFrame implements MouseListener, KeyListener, ActionLi
 	// UNNUSED
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
 	public void keyTyped(KeyEvent e) {
 		// System.err.println("KEYEVENT");
-		if (y == 0) {
-			// System.err.println("SPACE");
-			vy = 20;
+		if (timer.isRunning()) {
+			if (y == 0) {
+				// System.err.println("SPACE");
+				vy = 20;
+			}
+		}else{
+			timer.start();
 		}
 	}
 
